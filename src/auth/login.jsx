@@ -20,7 +20,7 @@ const Login = () => {
   const [isValiedPassword, setIisValiedPassword] = useState(false);
   const mailWarning = useRef();
   const passwordWarning = useRef();
-  // login
+  // login validation
   async function login(e) {
     e.preventDefault();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -37,34 +37,37 @@ const Login = () => {
       passwordWarning.current.style.display = "none";
       setIisValiedPassword(true);
     }
-     
-    if (isValiedMail && isValiedPassword) {
-      try {
-        const type = "Biker";
-        const res = await fetch("http://localhost:8000/login", {
-          method: "POST",
-          body: JSON.stringify({ email, password, type }),
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        });
-        const data = await res.json();
-        if (data.userId) {
-          navigate("/");
-        } else {
-          setError(data.message);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
   }
-
+  // login
+  useEffect(() => {
+    (async function () {
+      if (isValiedMail && isValiedPassword) {
+        try {
+          const type = "Biker";
+          const res = await fetch("http://localhost:8000/login", {
+            method: "POST",
+            body: JSON.stringify({ email, password, type }),
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+          });
+          const data = await res.json();
+          if (data.userId) {
+            navigate("/");
+          } else {
+            setError(data.message);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    })();
+  }, [isValiedMail]);
   return (
     <>
       <div className={styles.container}>
         <form className={styles.form}>
           <h3>Login Here</h3>
-          <label >Email</label>
+          <label>Email</label>
           <input
             id="email"
             type="text"

@@ -22,7 +22,7 @@ const Signup = () => {
   const mailWarning = useRef();
   const passwordWarning = useRef();
   const passwordConfirmWarning = useRef();
-
+  // sign up validation
   async function signUp(e) {
     e.preventDefault();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -35,7 +35,7 @@ const Signup = () => {
     }
     if (password.length < 8) {
       passwordWarning.current.style.display = "block";
-    }else{
+    } else {
       passwordWarning.current.style.display = "none";
     }
     if (password !== confirmPassword) {
@@ -44,25 +44,28 @@ const Signup = () => {
       passwordConfirmWarning.current.style.display = "none";
       setIisValiedPassword(true);
     }
-    if (isValiedMail && password.length && isValiedPassword) {
-      const type = "Biker";
-      try {
-        const res = await fetch("http://localhost:8000/signup", {
-          method: "POST",
-          body: JSON.stringify({ email, password, type }),
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        });
-        const data = await res.json();
-        if (data.userId) {
-          navigate("/");
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
   }
-
+  useEffect(() => {
+    (async function () {
+      if (isValiedMail && isValiedPassword) {
+        const type = "Biker";
+        try {
+          const res = await fetch("http://localhost:8000/signup", {
+            method: "POST",
+            body: JSON.stringify({ email, password, type }),
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+          });
+          const data = await res.json();
+          if (data.userId) {
+            navigate("/");
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    })();
+  }, [isValiedMail]);
   return (
     <>
       <div className={styles.container}>
