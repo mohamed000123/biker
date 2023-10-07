@@ -9,8 +9,7 @@ const Signup = () => {
   //logged in user redirect
   const navigate = useNavigate();
   useEffect(() => {
-    const userid = localStorage.getItem("user_id");
-    if (userid) {
+    if (document.cookie) {
       navigate("/");
     }
   }, []);
