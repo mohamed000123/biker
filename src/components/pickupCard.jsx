@@ -1,19 +1,20 @@
 import { Button } from "@mui/material";
-
-export default function PickupCard({ parcel }) {
+export default function PickupCard({ parcel, delivered }) {
   async function bookParcel(id) {
     try {
       const res = await fetch(`http://localhost:8000/pickup/parcel/${id}`, {
         credentials: "include",
       });
       const data = await res.json();
-      console.log(data);
+      if (data) {
+        window.location.reload();
+      }
     } catch (err) {
       console.log(err);
     }
   }
   return (
-    <div className="parcel" >
+    <div className="parcel">
       <p>
         parcel name:
         <span style={{ color: "blue" }}>{parcel.name}</span>
@@ -30,9 +31,16 @@ export default function PickupCard({ parcel }) {
         parcel status:
         <span style={{ color: "red" }}>{parcel.status}</span>
       </p>
-      <Button variant="contained" onClick={()=>{bookParcel(parcel.id);}}>
-        book parcel
-      </Button>
+      {!delivered && (
+        <Button
+          variant="contained"
+          onClick={() => {
+            bookParcel(parcel.id);
+          }}
+        >
+          book parcel
+        </Button>
+      )}
     </div>
   );
 }

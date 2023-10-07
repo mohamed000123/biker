@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import DropoffCard from "../components/dropoffCard";
-function YourParcels() {
+import Card from "../components/card";
+function PickedParcels() {
   const [parcels, setParcels] = useState([]);
   useEffect(() => {
     async function getData() {
@@ -20,11 +20,11 @@ function YourParcels() {
     <>
       <div className="container">
         {parcels.map((parcel) => {
-          return <DropoffCard parcel={parcel} key={parcel.id}></DropoffCard>;
+          return <Card parcel={parcel} key={parcel.id}></Card>;
         })}
       </div>
     </>
   );
 }
 
-export default YourParcels;
+export default PickedParcels;

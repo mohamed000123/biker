@@ -1,8 +1,9 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
 // pages
 import Home from "../pages/home";
-import YourParcels from "../pages/yourParcels";
+import PickedParcels from "../pages/pickedParcels";
 import AvailableParcels from "../pages/availableParcels";
+import DeliveredParcels from "../pages/deliveredParcels";
 // components
 import NotFound from "./notFound";
 import Nav from "./nav";
@@ -35,7 +36,7 @@ const Main = () => {
           element={
             <>
               <Nav />
-              <YourParcels />
+              <PickedParcels />
             </>
           }
         ></Route>
@@ -45,6 +46,15 @@ const Main = () => {
             <>
               <Nav />
               <AvailableParcels />
+            </>
+          }
+        ></Route>
+        <Route
+          path="/delivered"
+          element={
+            <>
+              <Nav />
+              <DeliveredParcels />
             </>
           }
         ></Route>

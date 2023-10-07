@@ -1,17 +1,21 @@
 import { Button } from "@mui/material";
+import { useEffect } from "react";
 
-export default function DropoffCard({ parcel }) {
-  async function bookParcel(id) {
+export default function Card({ parcel }) {
+  async function deliverParcel(id) {
     try {
       const res = await fetch(`http://localhost:8000/deliver/parcel/${id}`, {
         credentials: "include",
       });
       const data = await res.json();
-      console.log(data);
+      if(data){
+        window.location.reload();
+      }
     } catch (err) {
       console.log(err);
     }
   }
+  useEffect(()=>{},[])
   return (
     <div className="parcel">
       <p>
@@ -33,7 +37,7 @@ export default function DropoffCard({ parcel }) {
       <Button
         variant="contained"
         onClick={() => {
-          bookParcel(parcel.id);
+          deliverParcel(parcel.id);
         }}
       >
         delivered
