@@ -19,9 +19,15 @@ export default function Card({ parcel }) {
   return (
     <div className="parcel">
       <p>
-        parcel name:
-        <span style={{ color: "blue" }}>{parcel.name}</span>
+        parcel title:
+        <span style={{ color: "blue" }}>{parcel.title}</span>
       </p>
+      {parcel.description && (
+        <p>
+          description:
+          <span style={{ color: "blue" }}>{parcel.description}</span>
+        </p>
+      )}
       <p>
         pickup location:
         <span style={{ color: "blue" }}>{parcel.pickupAddress}</span>

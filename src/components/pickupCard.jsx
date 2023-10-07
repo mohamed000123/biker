@@ -1,5 +1,17 @@
 import { Button } from "@mui/material";
 export default function PickupCard({ parcel, delivered }) {
+  function displayData_Time(savedDateTime) {
+    const dateTime = new Date(savedDateTime);
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    };
+    const formattedDateTime = dateTime.toLocaleString(undefined, options);
+    return formattedDateTime;
+  }
   async function bookParcel(id) {
     try {
       const res = await fetch(`http://localhost:8000/pickup/parcel/${id}`, {
@@ -16,9 +28,15 @@ export default function PickupCard({ parcel, delivered }) {
   return (
     <div className="parcel">
       <p>
-        parcel name:
-        <span style={{ color: "blue" }}>{parcel.name}</span>
+        parcel title:
+        <span style={{ color: "blue" }}>{parcel.title}</span>
       </p>
+      {parcel.description && (
+        <p>
+          description:
+          <span style={{ color: "blue" }}>{parcel.description}</span>
+        </p>
+      )}
       <p>
         pickup location:
         <span style={{ color: "blue" }}>{parcel.pickupAddress}</span>
@@ -27,10 +45,14 @@ export default function PickupCard({ parcel, delivered }) {
         drop off location:
         <span style={{ color: "blue" }}>{parcel.deliveryAddress}</span>
       </p>
-      <p>
-        parcel status:
-        <span style={{ color: "red" }}>{parcel.status}</span>
-      </p>
+      {parcel.deliveryDate && (
+        <p>
+          deliverd at:
+          <span style={{ color: "green" }}>
+            {displayData_Time(parcel.deliveryDate)}
+          </span>
+        </p>
+      )}
       {!delivered && (
         <Button
           variant="contained"
