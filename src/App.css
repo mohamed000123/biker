@@ -31,6 +31,14 @@ a.active {
   background-color: rgba(222, 184, 135, 0.492);
   text-indent: 5px;
 }
+.noAvailableParcels {
+  width: 90%;
+  height: 75vh;
+}
+.noDeliveredParcels {
+  width: 90%;
+  height: 60vh;
+}
 /* home page */
 .home {
   height: 100vh;

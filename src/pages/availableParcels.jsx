@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import PickupCard from "../components/pickupCard";
+import noAvailableParcels from "../assets/noAbailableParcels.png"
 function AvailableParcels() {
   const [parcels, setParcels] = useState([]);
   useEffect(() => {
@@ -19,9 +20,16 @@ function AvailableParcels() {
   return (
     <>
       <div className="container">
-        {parcels.map((parcel) => {
-          return <PickupCard parcel={parcel} key={parcel.id}></PickupCard>;
-        })}
+        {parcels.length > 0 ? (
+          parcels.map((parcel) => {
+            return <PickupCard parcel={parcel} key={parcel.id}></PickupCard>;
+          })
+        ) : (
+          <>
+            <h2>no available parcels</h2>
+            <img src={noAvailableParcels} className="noAvailableParcels" />
+          </>
+        )}
       </div>
     </>
   );
