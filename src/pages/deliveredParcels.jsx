@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import PickupCard from "../components/pickupCard";
-import noDeliveredParcels from '../assets/noDeliverdParcels.jpg'
+import noDeliveredParcels from "../assets/noDeliverdParcels.jpg";
 function DeliveredParcels() {
   const [parcels, setParcels] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     async function getData() {
       try {
@@ -11,12 +12,17 @@ function DeliveredParcels() {
         });
         const data = await res.json();
         setParcels(data);
+        setIsLoading(false);
       } catch (err) {
         console.log(err);
+        setIsLoading(false);
       }
     }
     getData();
   }, []);
+  if (isLoading) {
+    return <div></div>;
+  }
   return (
     <>
       <div className="container">

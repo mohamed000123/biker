@@ -3,6 +3,7 @@ import Card from "../components/card";
 import noBookedParcels from "../assets/noParcels.jpg";
 function PickedParcels() {
   const [parcels, setParcels] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     async function getData() {
       try {
@@ -11,12 +12,17 @@ function PickedParcels() {
         });
         const data = await res.json();
         setParcels(data);
+        setIsLoading(false);
       } catch (err) {
         console.log(err);
+        setIsLoading(false);
       }
     }
     getData();
   }, []);
+    if (isLoading) {
+      return <div></div>;
+    }
   return (
     <>
       <div className="container">
